@@ -20,13 +20,7 @@ export default class User {
     return this.trips;
   }
 
-  public isFriend(user) {
-    for (const friend of this.getFriends()) {
-      if (friend === user) {
-        return true;
-      }
-    }
-
-    return false;
+  public isFriend(user: User) {
+    return this.getFriends().some((friend) => friend === user);
   }
 }
