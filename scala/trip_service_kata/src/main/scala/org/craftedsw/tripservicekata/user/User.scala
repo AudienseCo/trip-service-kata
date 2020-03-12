@@ -3,6 +3,8 @@ package org.craftedsw.tripservicekata.user
 import scala.collection.mutable
 import org.craftedsw.tripservicekata.trip.Trip
 
+import scala.util.control.Breaks.{break, breakable}
+
 class User {
 
 	val tripList: mutable.MutableList[Trip] = mutable.MutableList()
@@ -22,6 +24,10 @@ class User {
 
 	def addTrip(trip: Trip) = {
 		tripList += trip
+	}
+
+	def isFriendOf(user: User): Boolean = {
+		friends.contains(user)
 	}
 
 }
