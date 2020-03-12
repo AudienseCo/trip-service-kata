@@ -12,7 +12,7 @@ import org.craftedsw.tripservicekata.user.User
 class TripServiceSpec extends UnitSpec {
   "The getTripsByUser" should "return a UserNotLoggedInException if the user is not logged in" in {
     val user = new User()
-    val service = new TripService(session = UserSession)
+    val service = new TripService(TripDAOMock, UsersNotLoggedInSessionMock)
     assertThrows[UserNotLoggedInException] {
       service.getTripsByUser(user)
     }
@@ -20,7 +20,7 @@ class TripServiceSpec extends UnitSpec {
 
   "The getTripsByUser" should "return an empty List[Trip] if the given user doens't have any friends" in {
     val user = new User()
-    val service = new TripService(session = UserSession)
+    val service = new TripService(TripDAOMock, UsersLoggedInSessionMock)
     val result = service.getTripsByUser(user)
     assert(result == List())
   }
@@ -29,7 +29,7 @@ class TripServiceSpec extends UnitSpec {
     val user = new User()
     val friend = new User
     user.addFriend(friend)
-    val service = new TripService(session = UserSession)
+    val service = new TripService(TripDAOMock, UsersLoggedInSessionMock)
     val result = service.getTripsByUser(user)
     assert(result == List())
   }
@@ -39,7 +39,7 @@ class TripServiceSpec extends UnitSpec {
     user.addTrip(trip)
     val sessionUser = UsersLoggedInSessionMock
     user.addFriend(sessionUser.getLoggedUser())
-    val service = new TripService(session = UserSession)
+    val service = new TripService(TripDAOMock, UsersLoggedInSessionMock)
     val result = service.getTripsByUser(user)
     assert(result == List(trip))
   }

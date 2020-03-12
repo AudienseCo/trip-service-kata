@@ -1,15 +1,14 @@
 package org.craftedsw.tripservicekata.trip
 
 import org.craftedsw.tripservicekata.exception.UserNotLoggedInException
-import org.craftedsw.tripservicekata.user.{User, UserSession}
+import org.craftedsw.tripservicekata.user.{Session, User}
 
 import scala.util.control.Breaks._
 
-class TripService(tripDao: TripDAOTrait, session: UserSession.type) {
+class TripService(tripDao: TripDAOTrait, session: Session) {
 
   def getTripsByUser(user: User): List[Trip] = {
     var tripList: List[Trip] = List()
-//    val loggedInUser = session getLoggedUser ()
     val loggedInUser = session getLoggedUser ()
 
     var isFriend = false
