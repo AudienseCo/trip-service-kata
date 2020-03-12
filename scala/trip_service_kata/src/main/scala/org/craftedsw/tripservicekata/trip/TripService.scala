@@ -7,17 +7,15 @@ import scala.util.control.Breaks._
 
 class TripService(tripDao: TripDAOTrait, session: Session) {
 
-  def getTripsByUser(user: User): List[Trip] = {
-    var tripList: List[Trip] = List()
-    val loggedInUser = session getLoggedUser ()
-
-    if (loggedInUser != null) {
-      if (user.isFriendOf(loggedInUser)) {
-        tripList = tripDao.findTripsByUser(user)
-      }
-      tripList
-    } else {
-      throw new UserNotLoggedInException
+  def getTripsByUser(myUser: User): List[Trip] = {
+      session getLoggedUser() match {
+      case None => throw new UserNotLoggedInException
+      case Some(anotherUser) => getTripsCheckingFriendship(myUser, anotherUser)
     }
+  }
+
+  private def getTripsCheckingFriendship(myUser: User, anotherUser: User) = {
+    if (myUser.isFriendOf(anotherUser)) tripDao.findTripsByUser(myUser)
+    else List()
   }
 }

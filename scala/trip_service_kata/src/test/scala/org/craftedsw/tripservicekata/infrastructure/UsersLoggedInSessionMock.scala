@@ -4,7 +4,7 @@ import org.craftedsw.tripservicekata.user.{Session, User}
 
 object UsersLoggedInSessionMock extends Session {
   private val user = new User()
-  override def getLoggedUser(): User = {
-    user
+  override def getLoggedUser(): Option[User] = {
+    Some(user)
   }
 }

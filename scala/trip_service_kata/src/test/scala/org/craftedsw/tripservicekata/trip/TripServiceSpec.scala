@@ -38,7 +38,7 @@ class TripServiceSpec extends UnitSpec {
     val trip = new Trip
     user.addTrip(trip)
     val sessionUser = UsersLoggedInSessionMock
-    user.addFriend(sessionUser.getLoggedUser())
+    user.addFriend(sessionUser.getLoggedUser().get)
     val service = new TripService(TripDAOMock, UsersLoggedInSessionMock)
     val result = service.getTripsByUser(user)
     assert(result == List(trip))

@@ -3,7 +3,7 @@ import org.craftedsw.tripservicekata.exception.CollaboratorCallException
 
 trait Session {
 
-  def getLoggedUser(): User = {
+  def getLoggedUser(): Option[User] = {
     throw new CollaboratorCallException(
       "UserSession.getLoggedUser() should not be called in an unit test"
     );
