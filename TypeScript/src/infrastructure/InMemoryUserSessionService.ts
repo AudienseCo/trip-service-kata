@@ -1,6 +1,6 @@
-import CollaboratorCallException from "../domain/exception/CollaboratorCallException";
 import { IUserSessionService } from "../domain/IUserSessionService";
 import User from "../domain/User";
+import CollaboratorCallException from "./CollaboratorCallException";
 
 export class InMemoryUserSessionService implements IUserSessionService {
   public getLoggedUser(): User {
