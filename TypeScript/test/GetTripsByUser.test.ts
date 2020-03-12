@@ -1,26 +1,26 @@
 import "jest";
-import userNotLoggedInException from "../src/exception/UserNotLoggedInException";
-import Trip from "../src/trip/Trip";
-import TripService from "../src/trip/TripService";
-import User from "../src/user/User";
 import { TripDAOMock } from "../__mocks__/TripDAOMock";
 import { UserSessionMock } from "../__mocks__/UserSessionMock";
+import {GetTripsByUser} from "../src/application/GetTripsByUser";
+import userNotLoggedInException from "../src/domain/exception/UserNotLoggedInException";
+import Trip from "../src/domain/Trip";
+import User from "../src/domain/User";
 
 const userSessionReturnNull = new UserSessionMock(null);
 const tripDAOReturnEmpty = new TripDAOMock([]);
 const loggedUser = new User();
 const userSessionReturnLoggedUser = new UserSessionMock(loggedUser);
 
-describe("TripServiceShould", () => {
+describe("GetTripsByUser", () => {
   it("should throw an exception if the user is not logged.", () => {
     const user = new User();
-    const tripService = new TripService(
+    const getTripsByUser = new GetTripsByUser(
       userSessionReturnNull,
       tripDAOReturnEmpty,
     );
 
     expect(() => {
-      tripService.getTripsByUser(user);
+      getTripsByUser.run(user);
     }).toThrow(userNotLoggedInException);
   });
 
@@ -28,12 +28,12 @@ describe("TripServiceShould", () => {
     const user = new User();
     const expectedTripList = [];
 
-    const tripService = new TripService(
+    const getTripsByUser = new GetTripsByUser(
       userSessionReturnLoggedUser,
       tripDAOReturnEmpty,
     );
 
-    const tripList = tripService.getTripsByUser(user);
+    const tripList = getTripsByUser.run(user);
 
     expect(tripList).toEqual(expectedTripList);
   });
@@ -43,12 +43,12 @@ describe("TripServiceShould", () => {
     user.addFriend(loggedUser);
     const expectedTripList = [new Trip()];
 
-    const tripService = new TripService(
+    const getTripsByUser = new GetTripsByUser(
       new UserSessionMock(loggedUser),
       new TripDAOMock(expectedTripList),
     );
 
-    const tripList = tripService.getTripsByUser(user);
+    const tripList = getTripsByUser.run(user);
 
     expect(tripList).toEqual(expectedTripList);
   });
@@ -58,12 +58,12 @@ describe("TripServiceShould", () => {
     const friend = new User();
     user.addFriend(friend);
     const emptyTripList = [];
-    const tripService = new TripService(
+    const getTripsByUser = new GetTripsByUser(
       userSessionReturnLoggedUser,
       tripDAOReturnEmpty,
     );
 
-    const tripList = tripService.getTripsByUser(user);
+    const tripList = getTripsByUser.run(user);
 
     expect(tripList).toEqual(emptyTripList);
   });

@@ -1,4 +1,4 @@
-import Trip from "../trip/Trip";
+import Trip from "./Trip";
 
 export default class User {
   private trips: Trip[] = [];

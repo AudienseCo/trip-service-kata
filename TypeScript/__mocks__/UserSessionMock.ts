@@ -1,10 +1,10 @@
-import User from "../src/user/User";
-import { UserSession } from "../src/user/UserSession";
-export class UserSessionMock extends UserSession {
-    constructor(private loggedUser: User) {
-        super();
-    }
-    public getLoggedUser() {
-        return this.loggedUser;
-    }
+import { IUserSessionService } from "../src/domain/IUserSessionService";
+import User from "../src/domain/User";
+
+export class UserSessionMock implements IUserSessionService {
+  constructor(private loggedUser: User) {
+  }
+  public getLoggedUser() {
+    return this.loggedUser;
+  }
 }
