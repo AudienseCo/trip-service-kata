@@ -16,6 +16,9 @@
     "tslint": "^5.9.1"
   },
   "jest": {
+    "testPathIgnorePatterns" : [
+      "<rootDir>/test/__mocks___" 
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
